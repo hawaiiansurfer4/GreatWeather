@@ -9,4 +9,13 @@ import UIKit
 
 class AddWeatherCityVC: UIViewController {
     
+    @IBOutlet weak var cityNameTextField: UITextField!
+    
+    @IBAction func saveCityButtonPresses() {
+        
+    }
+    
+    @IBAction func closeButtonPressed() {
+        self.dismiss(animated: true, completion: nil)
+    }
 }

@@ -17,13 +17,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="iie-x4-hBk">
-                                <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeatherCell" rowHeight="100" id="iie-x4-hBk" customClass="WeatherCell" customModule="GreatWeather" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iie-x4-hBk" id="QwN-FH-qIa">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCn-t5-hu7">
+                                            <rect key="frame" x="20" y="39" width="52" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yc1-cH-Q9b">
+                                            <rect key="frame" x="316" y="30" width="78" height="40"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="DCn-t5-hu7" firstAttribute="top" secondItem="QwN-FH-qIa" secondAttribute="top" constant="39" id="HdC-KD-6Pj"/>
+                                        <constraint firstItem="DCn-t5-hu7" firstAttribute="leading" secondItem="QwN-FH-qIa" secondAttribute="leading" constant="20" symbolic="YES" id="Nxp-z5-bcR"/>
+                                        <constraint firstAttribute="trailing" secondItem="Yc1-cH-Q9b" secondAttribute="trailing" constant="20" symbolic="YES" id="Obq-nN-0Fm"/>
+                                        <constraint firstItem="Yc1-cH-Q9b" firstAttribute="top" secondItem="QwN-FH-qIa" secondAttribute="top" constant="30" id="jwQ-2w-bAR"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="cityLabel" destination="DCn-t5-hu7" id="aPn-O6-VSB"/>
+                                    <outlet property="tempLabel" destination="Yc1-cH-Q9b" id="UXy-r3-9aA"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -35,7 +59,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Settings" id="swb-Sm-Qvb"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="wgG-7E-ae3">
                             <connections>
-                                <segue destination="n7L-A0-C26" kind="presentation" id="J9T-3S-HIA"/>
+                                <segue destination="n7L-A0-C26" kind="show" id="wbJ-Rq-s8x"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -49,12 +73,43 @@
             <objects>
                 <viewController id="J5f-sC-6qt" customClass="AddWeatherCityVC" customModule="GreatWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TIU-t0-n1W">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aUZ-Fu-S4C">
+                                <rect key="frame" x="20" y="129" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Fb-tK-V7E">
+                                <rect key="frame" x="180" y="229" width="56" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Save"/>
+                                <connections>
+                                    <action selector="saveCityButtonPresses" destination="J5f-sC-6qt" eventType="touchUpInside" id="8aE-7N-Gbo"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="N1g-e8-Dkc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="aUZ-Fu-S4C" firstAttribute="leading" secondItem="TIU-t0-n1W" secondAttribute="leadingMargin" id="TVg-BJ-fEq"/>
+                            <constraint firstItem="aUZ-Fu-S4C" firstAttribute="top" secondItem="N1g-e8-Dkc" secondAttribute="top" constant="41" id="f96-Of-qAM"/>
+                            <constraint firstItem="1Fb-tK-V7E" firstAttribute="top" secondItem="aUZ-Fu-S4C" secondAttribute="bottom" constant="66" id="fZL-R3-V7I"/>
+                            <constraint firstItem="1Fb-tK-V7E" firstAttribute="leading" secondItem="N1g-e8-Dkc" secondAttribute="leading" constant="180" id="gzS-xS-kGD"/>
+                            <constraint firstItem="aUZ-Fu-S4C" firstAttribute="trailing" secondItem="TIU-t0-n1W" secondAttribute="trailingMargin" id="hrZ-iv-JQm"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Add City" id="sB6-FZ-phT"/>
+                    <navigationItem key="navigationItem" title="Add City" id="sB6-FZ-phT">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="umF-9m-d33">
+                            <connections>
+                                <action selector="closeButtonPressed" destination="J5f-sC-6qt" id="9PS-Go-dFR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cityNameTextField" destination="aUZ-Fu-S4C" id="WPr-5u-Zgf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OcX-Fz-JFv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -83,8 +138,9 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="n7L-A0-C26" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="QqS-b8-8MQ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tAF-qv-yU3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
