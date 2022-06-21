@@ -11,10 +11,16 @@ import UIKit
 class WeatherListTableVC: UITableViewController, AddWeatherDelegate {
     
     private var weatherListVM = WeatherListViewModel()
+    private var lastUnitSelected: Unit!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let userDefaults = UserDefaults.standard
+        if let value = userDefaults.value(forKey: "unit") as? String {
+            self.lastUnitSelected = Unit(rawValue: value)!
+        }
         
     }
     
@@ -36,12 +42,14 @@ class WeatherListTableVC: UITableViewController, AddWeatherDelegate {
     
     func addWeatherDidSave(vm: WeatherViewModel) {
         weatherListVM.addWeatherViewModel(vm)
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddWeatherCityVC" {
             prepareSegueForAddWeatherCityVC(segue: segue)
+        } else if segue.identifier == "SettingsTableVC" {
+            prepareSegueForSettingsTableVC(segue: segue)
         }
     }
     
@@ -56,5 +64,28 @@ class WeatherListTableVC: UITableViewController, AddWeatherDelegate {
         }
         
         addWeatherCityVC.delegate = self
+    }
+    
+    func prepareSegueForSettingsTableVC(segue: UIStoryboardSegue) {
+        guard let nav = segue.destination as? UINavigationController else {
+            fatalError("NavigationController not found")
+        }
+        
+        guard let settingsTableVC = nav.viewControllers.first as? SettingsTableVC else {
+            fatalError("SettingsTableVC not found")
+        }
+        
+        settingsTableVC.delegate = self
+    }
+}
+
+extension WeatherListTableVC: SettingsDelegate {
+    
+    func settingsDone(vm: SettingsViewModel) {
+        if lastUnitSelected.rawValue != vm.selectedUnit.rawValue {
+            weatherListVM.updateUnit(to: vm.selectedUnit)
+            tableView.reloadData()
+            lastUnitSelected = Unit(rawValue: vm.selectedUnit.rawValue)
+        }
     }
 }
