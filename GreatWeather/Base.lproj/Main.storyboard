@@ -59,7 +59,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Settings" id="swb-Sm-Qvb"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="wgG-7E-ae3">
                             <connections>
-                                <segue destination="n7L-A0-C26" kind="show" id="wbJ-Rq-s8x"/>
+                                <segue destination="n7L-A0-C26" kind="show" identifier="AddWeatherCityVC" id="wbJ-Rq-s8x"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
